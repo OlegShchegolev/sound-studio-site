@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="yandex-verification" content="5ef65a393c283b81" />
 
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109885523', 'ym');
+
+    ym(109885523, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109885523" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
 <!-- ═══════════ SEO / ШЕРИНГ. Основной адрес сайта: https://www.soundspirit.ru ═══════════
      Если домен когда-нибудь сменится — замените во ВСЕХ строках ниже
      (а также в robots.txt и sitemap.xml) адрес https://www.soundspirit.ru на новый. -->
@@ -246,7 +260,7 @@ const CONFIG = {
   instagram: "https://www.instagram.com/biba_barakhova/",  // "" — скрыть
   phone: "",                       // напр. "+7 900 000-00-00"; "" — скрыть
   address: "Адлер, ул. Карла Маркса 15, 2 этаж",
-  metrikaId: "",                   // номер счётчика Яндекс.Метрики, напр. "12345678"; "" — выключено
+  metrikaId: "",                   // НЕ используется: Метрика (счётчик 109885523) подключена напрямую в <head>
 };
 /* ════════════════════════════════════════════════════════════════════════════
    ▲▲▲  Конец редактируемой части. Ниже ничего менять не нужно.  ▲▲▲
@@ -845,15 +859,7 @@ function showToast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=> t.classList.remove('show'), 3200);
 }
 
-// Яндекс.Метрика — включится, если в CONFIG указан metrikaId
-(function(){
-  const id = (CONFIG.metrikaId||'').trim(); if(!id) return;
-  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],
-  k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-  (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-  ym(Number(id),"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true});
-})();
+// Яндекс.Метрика подключена напрямую в <head> (счётчик 109885523).
 </script>
 <!-- Виджет онлайн-записи DIKIDI -->
 <script type="text/javascript" src="https://dikidi.net/assets/js/widget_record/widget2.min.js?v=1773811740"></script>
