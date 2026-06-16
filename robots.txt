@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://olegshchegolev.github.io/sound-studio-site/sitemap.xml
+Sitemap: https://www.soundspirit.ru/sitemap.xml
