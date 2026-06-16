@@ -142,11 +142,17 @@ const CONTENT = {
   ],
   servicesNote: "<b>Также в студии:</b> цигун, женские круги и трансформационная игра «Переходы», выездные события «Баня и звук», Ночь гонга. Актуальное расписание — при записи и в Telegram-канале.",
 
-  // ── БЛИЖАЙШИЕ СОБЫТИЯ (обновляйте раз в неделю; пустой список [] скроет блок) ──
+  // ── БЛИЖАЙШИЕ СОБЫТИЯ ─────────────────────────────────────────
+  //  iso  — дата события в формате "ГГГГ-ММ-ДД" (или "ГГГГ-ММ-ДДTЧЧ:ММ").
+  //         Прошедшие события скрываются автоматически на следующий день.
+  //         Оставьте iso: "" для события без точной даты («Дата уточняется») —
+  //         оно будет показываться всегда, пока вы его не удалите.
+  //  date — как дата выглядит на сайте (можно писать как угодно).
+  //  Когда актуальных событий не останется — весь раздел скроется сам.
   events: [
-    { date: "Чт, 12 июня · 19:00", name: "Групповая звуковая медитация", spots: "есть места" },
-    { date: "Сб, 14 июня · 19:00", name: "Йога & Звук", spots: "есть места" },
-    { date: "Дата уточняется", name: "Ночь гонга", spots: "предзапись" },
+    { iso: "2026-06-12", date: "Чт, 12 июня · 19:00", name: "Групповая звуковая медитация", spots: "есть места" },
+    { iso: "2026-06-14", date: "Сб, 14 июня · 19:00", name: "Йога & Звук", spots: "есть места" },
+    { iso: "",           date: "Дата уточняется",      name: "Ночь гонга",                  spots: "предзапись" },
   ],
 
   // ── ВЕДУЩАЯ ──────────────────────────────────────────────────
@@ -738,16 +744,26 @@ $('services-list').innerHTML = CONTENT.services.map((s,i)=>`
   </div>`).join('');
 $('services-note').innerHTML = CONTENT.servicesNote;
 
-// events
-if (CONTENT.events && CONTENT.events.length){
-  $('events').style.display = '';
-  $('events-list').innerHTML = CONTENT.events.map(e=>`
-    <div class="event reveal">
-      <div class="e-date">${e.date}</div>
-      <div class="e-name">${e.name}</div>
-      <div class="e-spots">${e.spots||''}</div>
-    </div>`).join('');
-}
+// events — прошедшие даты скрываются автоматически
+(function(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = (CONTENT.events||[]).filter(e=>{
+    if (!e.iso) return true;                 // без точной даты — показываем всегда
+    const d = new Date(e.iso);
+    if (isNaN(d)) return true;               // нераспознанная дата — не прячем
+    d.setHours(0,0,0,0);
+    return d >= today;                        // прячем строго после дня события
+  });
+  if (upcoming.length){
+    $('events').style.display = '';
+    $('events-list').innerHTML = upcoming.map(e=>`
+      <div class="event reveal">
+        <div class="e-date">${e.date}</div>
+        <div class="e-name">${e.name}</div>
+        <div class="e-spots">${e.spots||''}</div>
+      </div>`).join('');
+  }
+})();
 
 // instruments marquee (x2 для бесшовности)
 const ins = CONTENT.instruments.map(t=>`<span>${t}</span>`).join('');
